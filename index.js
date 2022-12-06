@@ -101,7 +101,7 @@ async function run() {
       res.json(result)
   });
 
-   // get sharee 
+   // get product
    app.get("/products", async (req, res) => {
     const page = req.query.page;
     const size = parseInt(req.query.size);
