@@ -317,14 +317,7 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         const result=await userCollection.findOne(query)
         res.json(result)
     });
- // user profile email 
-    //   app.get('/updateUser/:email', async(req,res)=>{
-    //     const email=req.params.email;
-    //     const query={email:email};
-    //     const result=await userCollection.findOne(query)
-    //     res.json(result)
-    // });
-    // mkkk 
+  
 
 
     // get vegetables 
