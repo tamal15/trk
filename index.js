@@ -324,6 +324,7 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
     //     const result=await userCollection.findOne(query)
     //     res.json(result)
     // });
+    // mkkk 
 
 
     // get vegetables 
