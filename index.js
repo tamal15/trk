@@ -21,18 +21,23 @@ app.use(fileUpload());
 
 
 
-const uri = `mongodb+srv://E-krish-ban:vfOAvj7RQdalNWU4@cluster0.lcndbqa.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+// const uri = "mongodb+srv://black:TKZ0TdahzbTYZtju@cluster0.jmwzwfx.mongodb.net/?retryWrites=true&w=majority";
+
+// const uri = "mongodb+srv://blacks:Z8ZIKdXw61GAjXUJ@cluster0.jmwzwfx.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://blacks:Z8ZIKdXw61GAjXUJ@cluster0.li1977d.mongodb.net/?retryWrites=true&w=majority";
+// const uri = `mongodb+srv://blacks:Zm5Y38ZMoNV3DJK2@cluster0.jmwzwfx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function run() {
 
   try {
     await client.connect();
     console.log("connected to database");
-    const database = client.db('E-Keishi-BD');
+    const database = client.db('black_electrical');
 
     const userCollection = database.collection('users');
-    const buyerProductCollection = database.collection('buyerProducts');
+    const buyerProductCollection = database.collection('sellerProducts');
     const paymentCollection = database.collection('paymentUser');
     const adminProductCollection = database.collection('adminUpload');
     const appointmentCollection = database.collection('appointment');
@@ -112,36 +117,36 @@ async function run() {
       res.json({ admin: isAdmin })
     });
 
-    //    post product buyer 
-    // app.post('/PostUploadBuyer', async (req, res) => {
-    //   const user = req.body;
-    //   console.log(user);
+      //  post product buyer 
+    app.post('/PostUploadBuyer', async (req, res) => {
+      const user = req.body;
+      console.log(user);
 
-    //   const result = await buyerProductCollection.insertOne(user);
-    //   res.json(result)
-    // });
+      const result = await buyerProductCollection.insertOne(user);
+      res.json(result)
+    });
 
-    app.post('/PostUploadBuyer', async(req,res)=>{
-      const productName=req.body.productName;
-      const ProductPrice=req.body.ProductPrice;
-      const categories=req.body.categories;
-      const description=req.body.description;
-      const pic=req.files.img;
+  //   app.post('/PostUploadBuyer', async(req,res)=>{
+  //     const productName=req.body.productName;
+  //     const ProductPrice=req.body.ProductPrice;
+  //     const categories=req.body.categories;
+  //     const description=req.body.description;
+  //     const pic=req.files.img;
       
-      const picData=pic.data;
-      const encodeedPic=picData.toString('base64');
-      const buffer=Buffer.from(encodeedPic, 'base64');
-      const product={
-        productName,
-        ProductPrice,
-        categories,
-        description,
-          img:buffer
-      }
-      console.log(product)
-      const result=await buyerProductCollection.insertOne(product);
-       res.json(result)
-   });
+  //     const picData=pic.data;
+  //     const encodeedPic=picData.toString('base64');
+  //     const buffer=Buffer.from(encodeedPic, 'base64');
+  //     const product={
+  //       productName,
+  //       ProductPrice,
+  //       categories,
+  //       description,
+  //         img:buffer
+  //     }
+  //     console.log(product)
+  //     const result=await buyerProductCollection.insertOne(product);
+  //      res.json(result)
+  //  });
     //    post video apply
     app.post('/videoApply', async (req, res) => {
       const user = req.body;
@@ -247,14 +252,14 @@ app.delete('/deleteUser/:id', async(req,res)=>{
 
 // buyer status update 
 
-app.put("/buyerStatusUpdate/:id", async (req, res) => {
-  // console.log(req.body)
+app.put("/buyerStatusUpdatess/:id", async (req, res) => {
+  console.log(req.body)
 
   const filter = { _id: ObjectId(req.params.id) };
   
-  const result = await userCollection.updateOne(filter, {
+  const result = await applyvideoCollection.updateOne(filter, {
       $set: {
-          client: req.body.statu,
+          code: req.body.statu,
       },
       
   });
@@ -936,7 +941,7 @@ run().catch(console.dir)
 
 
 app.get('/', (req, res) => {
-  res.send("E-Krishi-BD shopping");
+  res.send("Black-Electrical");
 });
 
 app.listen(port, () => {
