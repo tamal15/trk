@@ -466,10 +466,10 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         total_amount: req.body.total_amount,
         currency: req.body.currency,
         tran_id: uuidv4(),
-        success_url: 'https://krishi.onrender.com/success',
-        fail_url: 'https://krishi.onrender.com/fail',
-        cancel_url: 'https://krishi.onrender.com/cancel',
-        ipn_url: 'https://krishi.onrender.com/ipn',
+        success_url: 'https://blacks.onrender.com//success',
+        fail_url: 'https://blacks.onrender.com//fail',
+        cancel_url: 'https://blacks.onrender.com//cancel',
+        ipn_url: 'https://blacks.onrender.com//ipn',
         shipping_method: 'Courier',
         product_name: "req.body.product_name",
         product_category: 'Electronic',
@@ -534,19 +534,19 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         }
 
       })
-      res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/success/${req.body.tran_id}`)
+      res.status(200).redirect(`https://black-13c64.web.app/success/${req.body.tran_id}`)
       // res.status(200).json(req.body)
     })
 
     app.post('/fail', async (req, res) => {
       // console.log(req.body);
       const order = await paymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(400).redirect('https://e-krishi-bd-9cbd9.web.app')
+      res.status(400).redirect('https://black-13c64.web.app')
     })
     app.post('/cancel', async (req, res) => {
       // console.log(req.body);
       const order = await paymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(200).redirect('https://e-krishi-bd-9cbd9.web.app')
+      res.status(200).redirect('https://black-13c64.web.app/')
     })
 
 
@@ -677,10 +677,10 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         total_amounts: 100,
         currency: "BDT",
         tran_id: uuidv4(),
-        success_url: 'https://krishi.onrender.com/success',
-        fail_url: 'https://krishi.onrender.com/fail',
-        cancel_url: 'https://krishi.onrender.com/cancel',
-        ipn_url: 'https://krishi.onrender.com/ipn',
+        success_url: 'https://blacks.onrender.com//success',
+        fail_url: 'https://blacks.onrender.com//fail',
+        cancel_url: 'https://blacks.onrender.com//cancel',
+        ipn_url: 'https://blacks.onrender.com//ipn',
         shipping_method: 'Courier',
         product_name: "req.body.product_name",
         product_category: 'Electronic',
@@ -745,18 +745,18 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         }
 
       })
-      // res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/success/${req.body.tran_id}`)
-      res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/success/${req.body.tran_id}`)
+      
+      res.status(200).redirect(`https://black-13c64.web.app/success/${req.body.tran_id}`)
     })
     app.post('/fail', async (req, res) => {
       // console.log(req.body);
       const order = await doctorPaymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(400).redirect(`http://localhost:3000`)
+      res.status(400).redirect(`https://black-13c64.web.app/`)
     })
     app.post('/cancel', async (req, res) => {
       // console.log(req.body);
       const order = await doctorPaymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/`)
+      res.status(200).redirect(`https://black-13c64.web.app/`)
     })
 
     // payment validate check and status update for pading to confarm 
@@ -811,10 +811,10 @@ app.post('/initPost', async(req, res) => {
     currency: 'BDT',
       tran_id:  uuidv4(),
       paymentStatus:'panding',
-      success_url: 'https://krishi.onrender.com/successdata',
-      fail_url: 'https://krishi.onrender.com/faildata',
-      cancel_url: 'https://krishi.onrender.com/canceldata',
-      ipn_url: 'https://krishi.onrender.com/ipn',
+      success_url: 'https://blacks.onrender.com//successdata',
+      fail_url: 'https://blacks.onrender.com//faildata',
+      cancel_url: 'https://blacks.onrender.com//canceldata',
+      ipn_url: 'https://blacks.onrender.com//ipn',
       shipping_method: 'Courier',
       product_name: req.body.product_name,
       product_category: 'Electronic',
@@ -872,18 +872,18 @@ app.post ('/successdata', async(req,res)=>{
     }
 
   })
-  // res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/success/${req.body.tran_id}`)
-  res.status(200).redirect(`https://e-krishi-bd-9cbd9.web.app/successdata/${req.body.tran_id}`)
+ 
+  res.status(200).redirect(`https://black-13c64.web.app/successdata/${req.body.tran_id}`)
 })
 app.post ('/faildata', async(req,res)=>{
   // console.log(req.body);
 const order=await doctorPaymentCollection.deleteOne({tran_id:req.body.tran_id})
-  res.status(400).redirect(`http://localhost:3000`)
+  res.status(400).redirect(`https://black-13c64.web.app/`)
 })
 app.post ('/canceldata', async(req,res)=>{
   // console.log(req.body);
   const order=await doctorPaymentCollection.deleteOne({tran_id:req.body.tran_id})
-  res.status(200).redirect(`http://localhost:3000`)
+  res.status(200).redirect(`https://black-13c64.web.app/`)
 })
 
 // payment validate check and status update for pading to confarm 
