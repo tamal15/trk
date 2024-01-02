@@ -525,7 +525,7 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
       // insert order data into database 
       const order = await paymentCollection.insertOne(data)
       console.log(data)
-      const sslcommer = new SSLCommerzPayment(process.env.STORE_ID, process.env.STORE_PASSWORD, false) //true for live default false for sandbox
+      const sslcommer = new SSLCommerzPayment('ekris63f46e4b4aa67', 'ekris63f46e4b4aa67@ssl',false) //true for live default false for sandbox
       sslcommer.init(data).then(data => {
         //process the response that got from sslcommerz 
         //https://developer.sslcommerz.com/doc/v4/#returned-parameters
