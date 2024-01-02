@@ -40,11 +40,11 @@ async function run() {
     const buyerProductCollection = database.collection('sellerProducts');
     const paymentCollection = database.collection('paymentUser');
     const adminProductCollection = database.collection('adminUpload');
-    const appointmentCollection = database.collection('appointment');
+    const electricianuploadCollection = database.collection('electricianuploadsdata');
     const doctorPaymentCollection = database.collection('doctorPayment');
-    const applyvideoCollection = database.collection('applyvideo');
-    const DoctorUploadCollection = database.collection('DoctorInfo');
-    const doctorReviewCollection = database.collection('doctorReview');
+    const bookElectriciansCollection = database.collection('bookElectrician');
+    const blogRoboticsCollection = database.collection('blogRobotics');
+    
 
 
 
@@ -126,6 +126,14 @@ async function run() {
       res.json(result)
     });
 
+    app.post('/electricianupload', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await electricianuploadCollection.insertOne(user);
+      res.json(result)
+    });
+
   //   app.post('/PostUploadBuyer', async(req,res)=>{
   //     const productName=req.body.productName;
   //     const ProductPrice=req.body.ProductPrice;
@@ -148,19 +156,13 @@ async function run() {
   //      res.json(result)
   //  });
     //    post video apply
-    app.post('/videoApply', async (req, res) => {
-      const user = req.body;
-      console.log(user);
-
-      const result = await applyvideoCollection.insertOne(user);
-      res.json(result)
-    });
+   
     //    post doctor data info apply
-    app.post('/doctordata', async (req, res) => {
+    app.post('/blogrobot', async (req, res) => {
       const user = req.body;
       console.log(user);
 
-      const result = await DoctorUploadCollection.insertOne(user);
+      const result = await blogRoboticsCollection.insertOne(user);
       res.json(result)
     });
 
@@ -195,58 +197,32 @@ async function run() {
 
     // get doctor portal 
 
-    app.get('/applycall', async (req, res) => {
-      const result = await applyvideoCollection.find({}).toArray()
+    app.get('/showBlog', async (req, res) => {
+      const result = await blogRoboticsCollection.find({}).toArray()
       res.json(result)
     });
-    // get doctor upload 
+  
 
-    // app.get('/doctorUpload', async (req, res) => {
-    //   const result = await DoctorUploadCollection.find({}).toArray()
-    //   res.json(result)
-    // });
-
-    app.get("/doctorUpload", async (req, res) => {
-      const page = req.query.page;
-      const size = parseInt(req.query.size);
-      const query = req.query;
-      delete query.page
-      delete query.size
-      Object.keys(query).forEach(key => {
-        if (!query[key])
-          delete query[key]
-      });
-
-      if (Object.keys(query).length) {
-        const cursor = DoctorUploadCollection.find(query, status = "approved");
-        const count = await cursor.count()
-        const allQuestions = await cursor.skip(page * size).limit(size).toArray()
-        res.json({
-          allQuestions, count
-        });
-      } else {
-        const cursor = DoctorUploadCollection.find({
-          // status: "approved"
-        });
-        const count = await cursor.count()
-        const allQuestions = await cursor.skip(page * size).limit(size).toArray()
-
-        res.json({
-          allQuestions, count
-        });
-      }
-
-    });
-
+   
     // buyer check and admin confarm 
 app.get('/adminConfarm', async(req,res)=>{
+  const result=await bookElectriciansCollection.find({}).toArray()
+  res.json(result)
+});
+app.get('/adminConfarmadmin', async(req,res)=>{
   const result=await userCollection.find({}).toArray()
+  res.json(result)
+});
+
+// electrician show 
+app.get('/showElectrician', async(req,res)=>{
+  const result=await electricianuploadCollection.find({}).toArray()
   res.json(result)
 });
 
 // delete user 
 app.delete('/deleteUser/:id', async(req,res)=>{
-  const result=await userCollection.deleteOne({_id:ObjectId(req.params.id)});
+  const result=await bookElectriciansCollection.deleteOne({_id:ObjectId(req.params.id)});
   // res.json(result)
 });
 
@@ -260,6 +236,23 @@ app.put("/buyerStatusUpdatess/:id", async (req, res) => {
   const result = await applyvideoCollection.updateOne(filter, {
       $set: {
           code: req.body.statu,
+      },
+      
+  });
+  // console.log(result)
+  res.send(result);
+});
+
+// buyer status update 
+
+app.put("/electricianStatusUpdates/:id", async (req, res) => {
+  console.log(req.body)
+
+  const filter = { _id: ObjectId(req.params.id) };
+  
+  const result = await bookElectriciansCollection.updateOne(filter, {
+      $set: {
+          positions: req.body.statu,
       },
       
   });
@@ -317,6 +310,14 @@ app.put("/buyerStatusUpdatess/:id", async (req, res) => {
       console.log(user);
 
       const result = await adminProductCollection.insertOne(user);
+      res.json(result)
+    });
+    //    post product buyer 
+    app.post('/bookElectrician', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await bookElectriciansCollection.insertOne(user);
       res.json(result)
     });
 
@@ -398,6 +399,8 @@ app.put("/buyerStatusUpdatess/:id", async (req, res) => {
     });
 
 
+
+
     // upadeta data show 
 
     app.get("/my", async (req, res) => {
@@ -442,6 +445,19 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
       const result = await buyerProductCollection.findOne(query)
       res.json(result)
     });
+    app.get('/ElectricianDetail/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: ObjectId(id) }
+      const result = await electricianuploadCollection.findOne(query)
+      res.json(result)
+    });
+    // admin product details 
+    app.get('/adminsproduct/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: ObjectId(id) }
+      const result = await adminProductCollection.findOne(query)
+      res.json(result)
+    });
 
     // doctor upload details part get 
     app.get('/doctorDetails/:id', async (req, res) => {
@@ -466,10 +482,10 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         total_amount: req.body.total_amount,
         currency: req.body.currency,
         tran_id: uuidv4(),
-        success_url: 'https://blacks.onrender.com//success',
-        fail_url: 'https://blacks.onrender.com//fail',
-        cancel_url: 'https://blacks.onrender.com//cancel',
-        ipn_url: 'https://blacks.onrender.com//ipn',
+        success_url: 'http://localhost:5000/success',
+        fail_url: 'http://localhost:5000/fail',
+        cancel_url: 'http://localhost:5000/cancel',
+        ipn_url: 'http://localhost:5000/ipn',
         shipping_method: 'Courier',
         product_name: "req.body.product_name",
         product_category: 'Electronic',
@@ -534,19 +550,19 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         }
 
       })
-      res.status(200).redirect(`https://black-13c64.web.app/success/${req.body.tran_id}`)
+      res.status(200).redirect(`http://localhost:3000/success/${req.body.tran_id}`)
       // res.status(200).json(req.body)
     })
 
     app.post('/fail', async (req, res) => {
       // console.log(req.body);
       const order = await paymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(400).redirect('https://black-13c64.web.app')
+      res.status(400).redirect('http://localhost:3000')
     })
     app.post('/cancel', async (req, res) => {
       // console.log(req.body);
       const order = await paymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(200).redirect('https://black-13c64.web.app/')
+      res.status(200).redirect('http://localhost:3000/')
     })
 
 
@@ -567,9 +583,25 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         .toArray();
       res.send(result);
     });
+    // booking electrician 
+    app.get("/mybookElectrician/:email", async (req, res) => {
+      // const buyeremail=req.body.cartProducts.map((data)=>data.buyerEmail)
+      console.log(req.params.email);
+      const email = req.params.email;
+      const result = await bookElectriciansCollection
+        .find({ userEmail: email })
+        .toArray();
+        console.log(result)
+      res.send(result);
+    });
 
     app.delete("/manageAllOrderDelete/:id", async (req, res) => {
       const result = await paymentCollection.deleteOne({ _id: ObjectId(req.params.id) });
+      res.send(result);
+    });
+    // delete electrician 
+    app.delete("/electricianmanageAllOrderDelete/:id", async (req, res) => {
+      const result = await bookElectriciansCollection.deleteOne({ _id: ObjectId(req.params.id) });
       res.send(result);
     });
 
@@ -618,46 +650,49 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
     });
 
 
-    // appointmennt collected 
-    app.post('/appointments', async (req, res) => {
-      const appointment = req.body;
-      const result = await appointmentCollection.insertOne(appointment)
-      console.log(result)
-      res.json(result)
+    // admin product collection gett 
+
+    app.get("/adminsproducts", async (req, res) => {
+      const page = req.query.page;
+      const size = parseInt(req.query.size);
+      const query = req.query;
+      delete query.page
+      delete query.size
+      Object.keys(query).forEach(key => {
+        if (!query[key])
+          delete query[key]
+      });
+
+      if (Object.keys(query).length) {
+        const cursor = adminProductCollection.find(query, status = "approved");
+        const count = await cursor.count()
+        const allData = await cursor.skip(page * size).limit(size).toArray()
+        res.json({
+          allData, count
+        });
+      } else {
+        const cursor = adminProductCollection.find({
+          // status: "approved"
+        });
+        const count = await cursor.count()
+        const allData = await cursor.skip(page * size).limit(size).toArray()
+
+        res.json({
+          allData, count
+        });
+      }
+
     });
-    // appointmennt collected 
-    app.post('/postReview', async (req, res) => {
-      const appointment = req.body;
-      const result = await doctorReviewCollection.insertOne(appointment)
-      console.log(result)
-      res.json(result)
-    })
 
 
 
+    
 
-    // get appointment 
 
-    // app get 
-    app.get('/appointments', async (req, res) => {
-      const email = req.query.email
-      console.log(email)
-      const date = req.query.date;
-      console.log(date)
-      const query = { email: email, date: date }
-      const cursor = appointmentCollection.find(query)
-      const appointment = await cursor.toArray()
-      res.json(appointment)
-    });
 
-    //  payment method of api get 
-    app.get('/appointments/:id', async (req, res) => {
-      const id = req.params.id
-      console.log(req.params.id)
-      const query = { _id: ObjectId(id) }
-      const result = await appointmentCollection.findOne(query)
-      res.json(result)
-    });
+    
+
+    
 
 
     // bikash payment start 
@@ -677,10 +712,10 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
         total_amounts: 100,
         currency: "BDT",
         tran_id: uuidv4(),
-        success_url: 'https://blacks.onrender.com//success',
-        fail_url: 'https://blacks.onrender.com//fail',
-        cancel_url: 'https://blacks.onrender.com//cancel',
-        ipn_url: 'https://blacks.onrender.com//ipn',
+        success_url: 'http://localhost:5000/success',
+        fail_url: 'http://localhost:5000/fail',
+        cancel_url: 'http://localhost:5000/cancel',
+        ipn_url: 'http://localhost:5000/ipn',
         shipping_method: 'Courier',
         product_name: "req.body.product_name",
         product_category: 'Electronic',
@@ -746,17 +781,17 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
 
       })
       
-      res.status(200).redirect(`https://black-13c64.web.app/success/${req.body.tran_id}`)
+      res.status(200).redirect(`http://localhost:3000/success/${req.body.tran_id}`)
     })
     app.post('/fail', async (req, res) => {
       // console.log(req.body);
       const order = await doctorPaymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(400).redirect(`https://black-13c64.web.app/`)
+      res.status(400).redirect(`http://localhost:3000/`)
     })
     app.post('/cancel', async (req, res) => {
       // console.log(req.body);
       const order = await doctorPaymentCollection.deleteOne({ tran_id: req.body.tran_id })
-      res.status(200).redirect(`https://black-13c64.web.app/`)
+      res.status(200).redirect(`http://localhost:3000/`)
     })
 
     // payment validate check and status update for pading to confarm 
@@ -811,10 +846,10 @@ app.post('/initPost', async(req, res) => {
     currency: 'BDT',
       tran_id:  uuidv4(),
       paymentStatus:'panding',
-      success_url: 'https://blacks.onrender.com//successdata',
-      fail_url: 'https://blacks.onrender.com//faildata',
-      cancel_url: 'https://blacks.onrender.com//canceldata',
-      ipn_url: 'https://blacks.onrender.com//ipn',
+      success_url: 'https://blacks.onrender.com/successdata',
+      fail_url: 'https://blacks.onrender.com/faildata',
+      cancel_url: 'https://blacks.onrender.com/canceldata',
+      ipn_url: 'https://blacks.onrender.com/ipn',
       shipping_method: 'Courier',
       product_name: req.body.product_name,
       product_category: 'Electronic',
@@ -873,17 +908,17 @@ app.post ('/successdata', async(req,res)=>{
 
   })
  
-  res.status(200).redirect(`https://black-13c64.web.app/successdata/${req.body.tran_id}`)
+  res.status(200).redirect(`http://localhost:3000/successdata/${req.body.tran_id}`)
 })
 app.post ('/faildata', async(req,res)=>{
   // console.log(req.body);
 const order=await doctorPaymentCollection.deleteOne({tran_id:req.body.tran_id})
-  res.status(400).redirect(`https://black-13c64.web.app/`)
+  res.status(400).redirect(`http://localhost:3000/`)
 })
 app.post ('/canceldata', async(req,res)=>{
   // console.log(req.body);
   const order=await doctorPaymentCollection.deleteOne({tran_id:req.body.tran_id})
-  res.status(200).redirect(`https://black-13c64.web.app/`)
+  res.status(200).redirect(`http://localhost:3000/`)
 })
 
 // payment validate check and status update for pading to confarm 
