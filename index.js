@@ -61,6 +61,9 @@ async function run() {
     const contactCollection = database.collection('Contact');
     const recruitmentCollection = database.collection('Recruitment');
     const blogCollection = database.collection('Blog');
+    const ticketCollection = database.collection('ticket');
+    const tourCollection = database.collection('tour');
+    const galleryCollection = database.collection('gallery');
     
     const bookElectriciansCollection = database.collection('bookElectrician');
     
@@ -207,6 +210,30 @@ async function run() {
       const result = await blogCollection.insertOne(user);
       res.json(result)
     });
+    // post blog
+    app.post('/addTicket', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await ticketCollection.insertOne(user);
+      res.json(result)
+    });
+    // post tour
+    app.post('/addTour', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await tourCollection.insertOne(user);
+      res.json(result)
+    });
+    // post gallery
+    app.post('/addGallery', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await galleryCollection.insertOne(user);
+      res.json(result)
+    });
 
     
    
@@ -248,6 +275,21 @@ app.get('/getRecruitment', async(req,res)=>{
     // get cblog
 app.get('/getBlog', async(req,res)=>{
   const result=await blogCollection.find({}).toArray()
+  res.json(result)
+});
+    // get ticket
+app.get('/getTicket', async(req,res)=>{
+  const result=await ticketCollection.find({}).toArray()
+  res.json(result)
+});
+    // get ticket
+app.get('/getTour', async(req,res)=>{
+  const result=await tourCollection.find({}).toArray()
+  res.json(result)
+});
+    // get gallery
+app.get('/getGallery', async(req,res)=>{
+  const result=await galleryCollection.find({}).toArray()
   res.json(result)
 });
 
