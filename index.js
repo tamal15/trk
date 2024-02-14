@@ -64,6 +64,10 @@ async function run() {
     const ticketCollection = database.collection('ticket');
     const tourCollection = database.collection('tour');
     const galleryCollection = database.collection('gallery');
+    const demandCollection = database.collection('demandletter');
+    const countryCollection = database.collection('addcountry');
+    const trainingCollection = database.collection('addTraining');
+    const airlinesCollection = database.collection('addAirlines');
     
     const bookElectriciansCollection = database.collection('bookElectrician');
     
@@ -234,6 +238,38 @@ async function run() {
       const result = await galleryCollection.insertOne(user);
       res.json(result)
     });
+    // post gdemand
+    app.post('/addDemand', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await demandCollection.insertOne(user);
+      res.json(result)
+    });
+    // post country
+    app.post('/addCountrys', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await countryCollection.insertOne(user);
+      res.json(result)
+    });
+    // post country
+    app.post('/addTraining', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await trainingCollection.insertOne(user);
+      res.json(result)
+    });
+    // post air lines
+    app.post('/addAirlines', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await airlinesCollection.insertOne(user);
+      res.json(result)
+    });
 
     
    
@@ -290,6 +326,26 @@ app.get('/getTour', async(req,res)=>{
     // get gallery
 app.get('/getGallery', async(req,res)=>{
   const result=await galleryCollection.find({}).toArray()
+  res.json(result)
+});
+    // get demanndletter
+app.get('/getDemand', async(req,res)=>{
+  const result=await demandCollection.find({}).toArray()
+  res.json(result)
+});
+    // get country
+app.get('/getCountry', async(req,res)=>{
+  const result=await countryCollection.find({}).toArray()
+  res.json(result)
+});
+    // get country
+app.get('/getTraining', async(req,res)=>{
+  const result=await trainingCollection.find({}).toArray()
+  res.json(result)
+});
+    // get air
+app.get('/getAir', async(req,res)=>{
+  const result=await airlinesCollection.find({}).toArray()
   res.json(result)
 });
 
