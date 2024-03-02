@@ -68,8 +68,11 @@ async function run() {
     const countryCollection = database.collection('addcountry');
     const trainingCollection = database.collection('addTraining');
     const airlinesCollection = database.collection('addAirlines');
+    const tradeCollection = database.collection('addTrade');
+    const certificatedIataCollection = database.collection('certificatedIata');
+    const certificatedatabCollection = database.collection('certificated_atab');
+    const userTicketCollection = database.collection('userDataTicket');
     
-    const bookElectriciansCollection = database.collection('bookElectrician');
     
 
 
@@ -270,6 +273,38 @@ async function run() {
       const result = await airlinesCollection.insertOne(user);
       res.json(result)
     });
+    // post add trade
+    app.post('/addtrade', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await tradeCollection.insertOne(user);
+      res.json(result)
+    });
+    // post add trade
+    app.post('/addcertificatedIata', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await certificatedIataCollection.insertOne(user);
+      res.json(result)
+    });
+    // post add atab certificated
+    app.post('/addcertificatedIatb', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await certificatedatabCollection.insertOne(user);
+      res.json(result)
+    });
+    // post add atab certificated
+    app.post('/postTicket', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await userTicketCollection.insertOne(user);
+      res.json(result)
+    });
 
     
    
@@ -348,6 +383,26 @@ app.get('/getAir', async(req,res)=>{
   const result=await airlinesCollection.find({}).toArray()
   res.json(result)
 });
+    // get trade
+app.get('/getTrade', async(req,res)=>{
+  const result=await tradeCollection.find({}).toArray()
+  res.json(result)
+});
+    // get certificated iata
+app.get('/getcertificatediata', async(req,res)=>{
+  const result=await certificatedIataCollection.find({}).toArray()
+  res.json(result)
+});
+    // get certificated atab
+app.get('/getcertificatedatab', async(req,res)=>{
+  const result=await certificatedatabCollection.find({}).toArray()
+  res.json(result)
+});
+    // get certificated atab
+app.get('/getUserticket', async(req,res)=>{
+  const result=await userTicketCollection.find({}).toArray()
+  res.json(result)
+});
 
 // delete 
 app.delete('/banners/:id',async(req,res)=>{
@@ -387,6 +442,56 @@ app.delete('/recruitmentdelete/:id',async(req,res)=>{
 // delete blog
 app.delete('/blogdelete/:id',async(req,res)=>{
   const result= await blogCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete gallery
+app.delete('/gallerydelete/:id',async(req,res)=>{
+  const result= await galleryCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete ticket
+app.delete('/ticketdelete/:id',async(req,res)=>{
+  const result= await ticketCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete tour
+app.delete('/tourdelete/:id',async(req,res)=>{
+  const result= await tourCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete demand letter
+app.delete('/demanddelete/:id',async(req,res)=>{
+  const result= await demandCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/countrydelete/:id',async(req,res)=>{
+  const result= await countryCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/airdelete/:id',async(req,res)=>{
+  const result= await airlinesCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/tradedelete/:id',async(req,res)=>{
+  const result= await tradeCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/certificatediatadelete/:id',async(req,res)=>{
+  const result= await certificatedIataCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/certificatedatabdelete/:id',async(req,res)=>{
+  const result= await certificatedatabCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/deleteuserdataticket/:id',async(req,res)=>{
+  const result= await userTicketCollection.deleteOne({_id:ObjectId(req.params.id)});
   res.json(result)
 });
 
@@ -437,6 +542,48 @@ app.get('/editBlog/:id', async(req,res)=>{
   const id=req.params.id;
   const query={_id:ObjectId(id)};
   const user=await blogCollection.findOne(query)
+  res.json(user)
+})
+// update gallery
+app.get('/editGallery/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await galleryCollection.findOne(query)
+  res.json(user)
+})
+// update ticket
+app.get('/editTicket/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await ticketCollection.findOne(query)
+  res.json(user)
+})
+// update ticket
+app.get('/editair/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await airlinesCollection.findOne(query)
+  res.json(user)
+})
+// update trade
+app.get('/editTrade/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await tradeCollection.findOne(query)
+  res.json(user)
+})
+// update trade
+app.get('/editCertificatediata/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await certificatedIataCollection.findOne(query)
+  res.json(user)
+})
+// update trade
+app.get('/editCertificatedatab/:id', async(req,res)=>{
+  const id=req.params.id;
+  const query={_id:ObjectId(id)};
+  const user=await certificatedatabCollection.findOne(query)
   res.json(user)
 })
 
@@ -615,9 +762,132 @@ app.put("/blogupdate/:id", async (req, res) => {
   res.json(result)
 
 })
+app.put("/galleryupdate/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        tittle1: updateUser.tittle1,
+        tittle2: updateUser.tittle2,
+        tittle3: updateUser.tittle3,
+        tittle4: updateUser.tittle4,
+        tittle5: updateUser.tittle5,
+        details: updateUser.details,
+        tittle6: updateUser.tittle6,
+        tittle7: updateUser.tittle7,
+        details2: updateUser.details2      }
+  }
+  const result=await galleryCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
+app.put("/ticketupdate/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        description: updateUser.description,
+        tittle: updateUser.tittle,
+        details: updateUser.details,   }
+  }
+  const result=await ticketCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
+app.put("/airupdate/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        description: updateUser.description,
+        name: updateUser.name,
+        details: updateUser.details,    }
+  }
+  const result=await airlinesCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
+app.put("/trade/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        tittle1: updateUser.tittle1,
+        tittle2: updateUser.tittle2,
+        description1: updateUser.description1,
+        description2: updateUser.description2,    }
+  }
+  const result=await tradeCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
+app.put("/certificatediata/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        tittle1: updateUser.tittle1,
+        tittle2: updateUser.tittle2,
+        description1: updateUser.description1,
+        description2: updateUser.description2,    }
+  }
+  const result=await certificatedIataCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
+app.put("/certificatedatabs/:id", async (req, res) => {
+
+  const id=req.params.id;
+  const updateUser=req.body
+  console.log(updateUser)
+  const filter={_id: ObjectId(id)};
+  const options={upsert:true};
+
+  const updateDoc={
+      $set:{
+        tittle1: updateUser.tittle1,
+        tittle2: updateUser.tittle2,
+        description1: updateUser.description1,
+        description2: updateUser.description2,    }
+  }
+  const result=await certificatedatabCollection.updateOne(filter,updateDoc,options);
+  console.log('uodateinf',id);
+  res.json(result)
+
+})
 
 
-// get sharee 
+// get 
 app.get("/blogData", async (req, res) => {
   const page = req.query.page;
   const size = parseInt(req.query.size);
