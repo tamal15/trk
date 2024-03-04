@@ -72,6 +72,7 @@ async function run() {
     const certificatedIataCollection = database.collection('certificatedIata');
     const certificatedatabCollection = database.collection('certificated_atab');
     const userTicketCollection = database.collection('userDataTicket');
+    const circularCollection = database.collection('addCircular');
     
     
 
@@ -305,6 +306,13 @@ async function run() {
       const result = await userTicketCollection.insertOne(user);
       res.json(result)
     });
+    app.post('/postCircular', async (req, res) => {
+      const user = req.body;
+      console.log(user);
+
+      const result = await circularCollection.insertOne(user);
+      res.json(result)
+    });
 
     
    
@@ -403,6 +411,11 @@ app.get('/getUserticket', async(req,res)=>{
   const result=await userTicketCollection.find({}).toArray()
   res.json(result)
 });
+    // get certificated atab
+app.get('/getcircular', async(req,res)=>{
+  const result=await circularCollection.find({}).toArray()
+  res.json(result)
+});
 
 // delete 
 app.delete('/banners/:id',async(req,res)=>{
@@ -492,6 +505,11 @@ app.delete('/certificatedatabdelete/:id',async(req,res)=>{
 // delete 
 app.delete('/deleteuserdataticket/:id',async(req,res)=>{
   const result= await userTicketCollection.deleteOne({_id:ObjectId(req.params.id)});
+  res.json(result)
+});
+// delete 
+app.delete('/deletecircular/:id',async(req,res)=>{
+  const result= await circularCollection.deleteOne({_id:ObjectId(req.params.id)});
   res.json(result)
 });
 
@@ -888,7 +906,7 @@ app.put("/certificatedatabs/:id", async (req, res) => {
 
 
 // get 
-app.get("/blogData", async (req, res) => {
+app.get("/getDemands", async (req, res) => {
   const page = req.query.page;
   const size = parseInt(req.query.size);
   const query = req.query;
@@ -900,14 +918,14 @@ app.get("/blogData", async (req, res) => {
   });
 
   if (Object.keys(query).length) {
-      const cursor = blogCollection.find(query, status = "approved");
+      const cursor = demandCollection.find(query, status = "approved");
       const count = await cursor.count()
       const alldata = await cursor.skip(page * size).limit(size).toArray()
       res.json({
           alldata, count
       });
   } else {
-      const cursor = blogCollection.find({
+      const cursor = demandCollection.find({
           // status: "approved"
       });
       const count = await cursor.count()
