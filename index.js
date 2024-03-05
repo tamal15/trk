@@ -27,7 +27,8 @@ app.use(fileUpload());
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ht74mzb.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://Turki_bd:64iqNIIJm6qnLrji@cluster0.ht74mzb.mongodb.net/?retryWrites=true&w=majority`;
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -604,6 +605,15 @@ app.get('/editCertificatedatab/:id', async(req,res)=>{
   const user=await certificatedatabCollection.findOne(query)
   res.json(user)
 })
+
+app.get('/trades/:id', async(req,res)=>{
+  const id=req.params.id
+  const query={_id:ObjectId(id)}
+  const result=await tradeCollection.findOne(query)
+  res.json(result)
+});
+
+
 
 app.put("/bannerupdate/:id", async (req, res) => {
 
